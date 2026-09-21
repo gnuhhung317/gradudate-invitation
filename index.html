@@ -51,16 +51,21 @@
       background-color: #FAF8F5;
     }
 
-    /* Fixed-size card wrapper - scales to fit screen */
+    /* Fixed-size card wrapper - scales to fit screen seamlessly */
     .card-scaler {
       width: 430px;
-      transform-origin: top center;
+      height: 680px;
+      position: relative;
+      margin: 0 auto;
     }
 
     /* The card itself - always exactly 430x680 */
     .fixed-card {
       width: 430px;
       height: 680px;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     @media print {
@@ -73,6 +78,8 @@
         display: none !important;
       }
       .card-scaler {
+        width: 148mm !important;
+        height: 210mm !important;
         transform: none !important;
       }
       .fixed-card {
@@ -81,25 +88,27 @@
         margin: 0 auto !important;
         width: 148mm !important;
         height: 210mm !important;
+        position: relative !important;
+        transform: none !important;
         page-break-inside: avoid;
       }
     }
   </style>
 </head>
-<body class="gallery-backdrop min-h-screen text-slate-100 flex flex-col items-center justify-center p-4 selection:bg-hust-gold selection:text-black font-sans antialiased">
+<body class="gallery-backdrop min-h-screen text-slate-100 flex flex-col items-center justify-center p-3 sm:p-6 selection:bg-hust-gold selection:text-black font-sans antialiased">
 
 <!-- TOP MINIMAL PRESENTATION BAR -->
-<header class="w-full max-w-[430px] mb-4 flex flex-col gap-3 no-print px-1" id="header-bar">
+<header class="w-full max-w-[430px] mb-4 flex flex-col gap-2.5 no-print px-1" id="header-bar">
   <div class="flex items-center gap-2.5">
-    <span class="w-2 h-2 rounded-full bg-hust-red"></span>
-    <span class="font-display text-xs tracking-wider uppercase text-slate-400 font-medium">
+    <span class="w-2 h-2 rounded-full bg-hust-red shrink-0"></span>
+    <span class="font-display text-xs tracking-wider uppercase text-slate-400 font-medium truncate">
       Lễ Tốt Nghiệp 2026 • Bách Khoa Hà Nội
     </span>
   </div>
-  <div class="flex flex-col sm:flex-row items-center gap-3 bg-white/5 p-1.5 rounded-full border border-white/10 shadow-inner">
-    <input type="text" id="name-input" placeholder="Nhập tên người nhận (VD: Anh A)..." class="flex-1 w-full bg-transparent border-none text-sm text-white placeholder-slate-400 focus:ring-0 focus:outline-none px-4 font-display" oninput="updateName()">
-    <button id="download-btn" class="w-full sm:w-auto shrink-0 group inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-hust-red hover:bg-hust-crimson text-white text-xs font-display font-bold tracking-wide transition-all duration-200 shadow-md active:scale-95" onclick="downloadImage()">
-      <svg class="w-4 h-4 text-white/90 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <div class="flex items-center gap-2 bg-white/5 p-1.5 rounded-full border border-white/10 shadow-inner w-full">
+    <input type="text" id="name-input" placeholder="Nhập tên người nhận..." class="flex-1 min-w-0 bg-transparent border-none text-xs sm:text-sm text-white placeholder-slate-400 focus:ring-0 focus:outline-none px-3 font-display" oninput="updateName()">
+    <button id="download-btn" class="shrink-0 group inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-full bg-hust-red hover:bg-hust-crimson text-white text-xs font-display font-bold tracking-wide transition-all duration-200 shadow-md active:scale-95" onclick="downloadImage()">
+      <svg class="w-3.5 h-3.5 text-white/90 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
       </svg>
       <span>LƯU ẢNH</span>
@@ -112,54 +121,77 @@
 <!-- ========================================================================= -->
 <!-- SINGLE-SIDED PHYSICAL INVITATION CARD (A5 PORTRAIT FORMAT) -->
 <!-- ========================================================================= -->
-<div id="invitation-card" class="fixed-card paper-texture paper-shadow relative rounded-sm text-hust-dark p-9 flex flex-col justify-between overflow-hidden border border-amber-900/10">
+<div id="invitation-card" class="fixed-card paper-texture paper-shadow rounded-sm text-hust-dark p-7 flex flex-col justify-between overflow-hidden border border-amber-900/10">
 <!-- Fine inner border line for physical print elegance -->
-<div class="absolute inset-4 border border-hust-dark/10 pointer-events-none rounded-[1px]"></div>
+<div class="absolute inset-3.5 border border-hust-dark/10 pointer-events-none rounded-[1px]"></div>
 <!-- Subdued decorative corner accents -->
-<div class="absolute top-4 left-4 w-2.5 h-2.5 border-t border-l border-hust-red/50 pointer-events-none"></div>
-<div class="absolute top-4 right-4 w-2.5 h-2.5 border-t border-r border-hust-red/50 pointer-events-none"></div>
-<div class="absolute bottom-4 left-4 w-2.5 h-2.5 border-b border-l border-hust-red/50 pointer-events-none"></div>
-<div class="absolute bottom-4 right-4 w-2.5 h-2.5 border-b border-r border-hust-red/50 pointer-events-none"></div>
+<div class="absolute top-3.5 left-3.5 w-2.5 h-2.5 border-t border-l border-hust-red/50 pointer-events-none"></div>
+<div class="absolute top-3.5 right-3.5 w-2.5 h-2.5 border-t border-r border-hust-red/50 pointer-events-none"></div>
+<div class="absolute bottom-3.5 left-3.5 w-2.5 h-2.5 border-b border-l border-hust-red/50 pointer-events-none"></div>
+<div class="absolute bottom-3.5 right-3.5 w-2.5 h-2.5 border-b border-r border-hust-red/50 pointer-events-none"></div>
+
 <!-- ================= 1. CARD HEADER / INSTITUTION ================= -->
-<div class="relative z-10 text-center pt-2">
-<div class="inline-flex items-center justify-center gap-2 mb-1.5">
+<div class="relative z-10 text-center pt-1">
+<div class="inline-flex items-center justify-center gap-2 mb-1">
 <span class="w-1.5 h-1.5 rotate-45 bg-hust-red"></span>
-<p class="font-display text-[11px] font-bold tracking-[0.24em] text-hust-crimson uppercase whitespace-nowrap">
+<p class="font-display text-[11px] font-bold tracking-[0.2em] text-hust-crimson uppercase whitespace-nowrap">
           ĐẠI HỌC BÁCH KHOA HÀ NỘI
         </p>
 <span class="w-1.5 h-1.5 rotate-45 bg-hust-red"></span>
 </div>
-<p class="text-[9px] font-display uppercase tracking-[0.28em] text-hust-warmgray font-medium whitespace-nowrap">
+<p class="text-[8.5px] font-display uppercase tracking-[0.22em] text-hust-warmgray font-medium whitespace-nowrap">
         HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
       </p>
 </div>
+
 <!-- ================= 2. MINIMALIST GEOMETRIC ARTWORK ================= -->
-<div class="relative z-10 flex items-center justify-center py-2"><div class="relative flex items-center justify-center"><div class="absolute -inset-3 rounded-full bg-gradient-to-tr from-amber-200/40 via-hust-gold/15 to-transparent blur-lg pointer-events-none"></div><svg class="absolute -inset-4 w-[calc(100%+32px)] h-[calc(100%+32px)] pointer-events-none" fill="none" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg"><circle cx="80" cy="80" r="74" stroke="#141416" stroke-dasharray="3 3" stroke-opacity="0.15" stroke-width="0.75"></circle><circle cx="80" cy="80" r="68" stroke="#C4121A" stroke-opacity="0.3" stroke-width="0.75"></circle><path d="M 80 12 A 68 68 0 0 1 148 80" stroke="#C4121A" stroke-linecap="round" stroke-width="2"></path><path d="M 12 80 A 68 68 0 0 1 80 148" stroke="#E5A00D" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="1.75"></path><circle cx="80" cy="6" fill="#C4121A" r="2.5"></circle><circle cx="154" cy="80" fill="#E5A00D" r="2.5"></circle><circle cx="80" cy="154" fill="#141416" opacity="0.4" r="2.5"></circle><circle cx="6" cy="80" fill="#141416" opacity="0.4" r="2.5"></circle></svg><div class="relative w-32 h-32 rounded-full p-1 bg-gradient-to-br from-amber-400/50 via-hust-red/70 to-hust-crimson shadow-md"><div class="w-full h-full rounded-full overflow-hidden border-2 border-white/90 bg-slate-100"><img alt="Bùi Đức Hùng" crossorigin="anonymous" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIq89rfgkkQkZBVWjAA5c4o9bAIJgX2x1fdU6Fq77y1Ewp4bOhDTSpTNLRx-tKrZBYHvRSlrSSmU_CuUgFVUEDqQfZbiPruAAGLRO3dfzk9z00uOnlDpMeE--HAnyudWoabHQNOWN825pYuAR4GVjDjPlagkQ-QwRnJaXbSg-aYFkoqZEfvOKkz6o0V5XShAs9e8TJyvZRoEi7nbTTa2fBRoulVXUmy9Jl4OE4YQbD_0YYenasl96cLyfcQx1Je73vWMo"></div></div></div></div>
+<div class="relative z-10 flex items-center justify-center py-1">
+<div class="relative flex items-center justify-center">
+<div class="absolute -inset-3 rounded-full bg-gradient-to-tr from-amber-200/40 via-hust-gold/15 to-transparent blur-lg pointer-events-none"></div>
+<svg class="absolute -inset-4 w-[calc(100%+32px)] h-[calc(100%+32px)] pointer-events-none" fill="none" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+<circle cx="80" cy="80" r="74" stroke="#141416" stroke-dasharray="3 3" stroke-opacity="0.15" stroke-width="0.75"></circle>
+<circle cx="80" cy="80" r="68" stroke="#C4121A" stroke-opacity="0.3" stroke-width="0.75"></circle>
+<path d="M 80 12 A 68 68 0 0 1 148 80" stroke="#C4121A" stroke-linecap="round" stroke-width="2"></path>
+<path d="M 12 80 A 68 68 0 0 1 80 148" stroke="#E5A00D" stroke-dasharray="4 4" stroke-linecap="round" stroke-width="1.75"></path>
+<circle cx="80" cy="6" fill="#C4121A" r="2.5"></circle>
+<circle cx="154" cy="80" fill="#E5A00D" r="2.5"></circle>
+<circle cx="80" cy="154" fill="#141416" opacity="0.4" r="2.5"></circle>
+<circle cx="6" cy="80" fill="#141416" opacity="0.4" r="2.5"></circle>
+</svg>
+<div class="relative w-32 h-32 rounded-full p-1 bg-gradient-to-br from-amber-400/50 via-hust-red/70 to-hust-crimson shadow-md">
+<div class="w-full h-full rounded-full overflow-hidden border-2 border-white/90 bg-slate-100">
+<img alt="Bùi Đức Hùng" crossorigin="anonymous" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIq89rfgkkQkZBVWjAA5c4o9bAIJgX2x1fdU6Fq77y1Ewp4bOhDTSpTNLRx-tKrZBYHvRSlrSSmU_CuUgFVUEDqQfZbiPruAAGLRO3dfzk9z00uOnlDpMeE--HAnyudWoabHQNOWN825pYuAR4GVjDjPlagkQ-QwRnJaXbSg-aYFkoqZEfvOKkz6o0V5XShAs9e8TJyvZRoEi7nbTTa2fBRoulVXUmy9Jl4OE4YQbD_0YYenasl96cLyfcQx1Je73vWMo">
+</div>
+</div>
+</div>
+</div>
+
 <!-- ================= 3. CORE TITLES & HONOREE ================= -->
 <div class="relative z-10 text-center">
-<h1 class="font-condensed font-bold tracking-tight text-[44px] uppercase leading-none text-hust-dark whitespace-nowrap">
+<h1 class="font-condensed font-bold tracking-tight text-[42px] uppercase leading-none text-hust-dark whitespace-nowrap">
         GRADUATION DAY
       </h1>
-<p class="font-display text-sm tracking-[0.32em] text-hust-gold font-bold mt-1 uppercase">
+<p class="font-display text-xs tracking-[0.32em] text-hust-gold font-bold mt-1 uppercase">
         2026
       </p>
-<div class="my-4 flex items-center justify-center gap-3">
+<div class="my-3 flex items-center justify-center gap-3">
 <span class="h-px w-10 bg-hust-red/30"></span>
 <span class="font-display text-[10px] uppercase tracking-[0.2em] text-hust-warmgray font-medium whitespace-nowrap">Mít tơ</span>
 <span class="h-px w-10 bg-hust-red/30"></span>
 </div>
 <!-- Honoree Name in Bold Editorial Typography -->
-<h2 class="font-display font-bold text-[28px] tracking-wide text-hust-dark uppercase whitespace-nowrap">
+<h2 class="font-display font-bold text-[26px] tracking-wide text-hust-dark uppercase whitespace-nowrap">
         BÙI ĐỨC HÙNG
       </h2>
 </div>
+
 <!-- ================= 4. INVITATION MESSAGE & RECIPIENT ================= -->
-<div class="relative z-10 text-center my-1 px-4">
+<div class="relative z-10 text-center my-0.5 px-2">
 <p class="text-xs text-hust-warmgray font-medium whitespace-nowrap">
         Trân trọng kính mời
       </p>
-<div class="my-1.5 inline-block border-b-2 border-hust-red/60 px-4 pb-0.5">
-<span id="recipient-name" class="font-display font-bold text-lg text-hust-crimson tracking-tight whitespace-nowrap">
+<div class="my-1 inline-block border-b-2 border-hust-red/60 px-3 pb-0.5">
+<span id="recipient-name" class="font-display font-bold text-base text-hust-crimson tracking-tight whitespace-nowrap">
           [TÊN NGƯỜI NHẬN]
         </span>
 </div>
@@ -167,27 +199,28 @@
         đến chung vui trong ngày tốt nghiệp.
       </p>
 </div>
+
 <!-- ================= 5. EVENT DETAILS & CONTACT ================= -->
-<div class="relative z-10 bg-white/70 border border-hust-dark/10 rounded-sm p-4 shadow-sm mx-2">
-<div class="flex items-center justify-between gap-3 text-center divide-x divide-hust-dark/10">
+<div class="relative z-10 bg-white/80 border border-hust-dark/10 rounded-sm p-3.5 shadow-sm mx-1">
+<div class="flex items-center justify-between gap-2 text-center divide-x divide-hust-dark/10">
 <!-- Time & Venue -->
-<div class="pr-4 flex-1">
-<div class="flex items-center justify-start gap-1.5 text-hust-crimson font-display text-xs font-bold tracking-wide">
+<div class="pr-3 flex-1 text-left">
+<div class="flex items-center gap-1.5 text-hust-crimson font-display text-[11px] font-bold tracking-tight">
 <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
 <span class="whitespace-nowrap">08:00 – 10:00, Sáng 27/09/2026</span>
 </div>
-<div class="font-display font-bold text-sm text-hust-dark mt-0.5">
+<div class="font-display font-bold text-xs text-hust-dark mt-0.5 pl-5">
             Cổng parabol, HUST</div>
 </div>
 <!-- Phone contact -->
-<div class="pl-4 flex-1">
-<span class="block text-[10px] uppercase font-display tracking-wider text-hust-warmgray">
+<div class="pl-3 shrink-0 text-right">
+<span class="block text-[9.5px] uppercase font-display tracking-wider text-hust-warmgray">
             Đến nơi, gọi:
           </span>
-<a class="inline-flex items-center gap-1.5 font-display text-sm font-bold text-hust-crimson">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<a class="inline-flex items-center gap-1 font-display text-[12px] font-bold text-hust-crimson mt-0.5">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
 <span class="whitespace-nowrap">0379 544 677</span>
@@ -195,8 +228,9 @@
 </div>
 </div>
 </div>
+
 <!-- ================= 6. SUBTLE FOOTER SIGNATURE ================= -->
-<div class="relative z-10 text-center pt-2 pb-1 border-t border-hust-dark/10">
+<div class="relative z-10 text-center pt-2 pb-0.5 border-t border-hust-dark/10">
 <p class="font-serif italic text-xs text-hust-warmgray tracking-wide">
         "Đi được đến hôm nay, chưa bao giờ là chuyện của một người"
       </p>
@@ -211,28 +245,32 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
   <script>
-    // ===== SCALE CARD TO FIT SCREEN =====
+    // ===== SCALE CARD TO FIT SCREEN PRECISELY =====
     function scaleCard() {
       const scaler = document.getElementById('card-scaler');
-      const cardWidth = 430;
-      const bodyPadding = 32; // 16px padding on each side (p-4)
-      const availableWidth = window.innerWidth - bodyPadding;
+      const card = document.getElementById('invitation-card');
+      const headerBar = document.getElementById('header-bar');
+      const padding = 24; // padding left + right
+      const availableWidth = Math.min(window.innerWidth - padding, 430);
       
-      if (availableWidth < cardWidth) {
-        const scale = availableWidth / cardWidth;
-        scaler.style.transform = 'scale(' + scale + ')';
-        // Adjust the wrapper height so the page layout isn't broken
-        scaler.style.height = (680 * scale) + 'px';
+      if (availableWidth < 430) {
+        const scale = availableWidth / 430;
+        scaler.style.width = availableWidth + 'px';
+        scaler.style.height = Math.floor(680 * scale) + 'px';
+        card.style.transform = 'scale(' + scale + ')';
+        card.style.transformOrigin = 'top left';
+        if (headerBar) headerBar.style.maxWidth = availableWidth + 'px';
       } else {
-        scaler.style.transform = 'scale(1)';
+        scaler.style.width = '430px';
         scaler.style.height = '680px';
+        card.style.transform = 'none';
+        if (headerBar) headerBar.style.maxWidth = '430px';
       }
     }
 
     // Scale on load and resize
     window.addEventListener('load', scaleCard);
     window.addEventListener('resize', scaleCard);
-    // Also run immediately
     scaleCard();
 
     // ===== DOWNLOAD IMAGE =====
@@ -252,9 +290,9 @@
 
       const btn = document.getElementById('download-btn');
       const originalHtml = btn.innerHTML;
-      btn.innerHTML = '<span class="text-xs">Đang tạo ảnh...</span>';
+      btn.innerHTML = '<span class="text-xs">Đang tạo...</span>';
 
-      // Always render at the fixed card size (430x680) regardless of current scale
+      // Capture at fixed 430x680 resolution
       htmlToImage.toPng(card, {
         pixelRatio: 3,
         backgroundColor: '#FAF8F5',
